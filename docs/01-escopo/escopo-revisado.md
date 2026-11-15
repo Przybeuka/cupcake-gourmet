@@ -13,7 +13,7 @@ da disciplina.
 | # | Mudança | Justificativa |
 |---|---|---|
 | M1 | App mobile nativo → **aplicação web responsiva (PWA)** | Os testadores acessam por um link, sem instalar APK; mantém a experiência mobile (layout responsivo, RNF da HU 06) |
-| M2 | Pagamento real (HU 11) → **pagamento simulado** | Integração com gateway exige credenciamento comercial; o fluxo e os estados do pagamento são mantidos e podem ser trocados por gateway real depois |
+| M2 | Pagamento real (HU 11) → **pagamento simulado** | Integração com gateway exige credenciamento comercial. O fluxo e os estados são mantidos: cartão é aprovado/recusado na hora (cartões terminados em 0002 são recusados para teste); Pix gera QR Code e fica pendente até a confirmação simulada ou até expirar em 10 min, quando o pedido é cancelado e o estoque devolvido. A troca por gateway real fica isolada em `backend/app/models/pagamento_simulado.py` |
 | M3 | Frete por distância e raio de 15 km (HU 10) → **ViaCEP + taxa fixa** | Elimina dependência de API paga de geolocalização; a regra de raio fica no backlog |
 | M4 | Status em tempo real (HU 12) → **status atualizado por consulta** | Evita WebSocket; o cliente vê o status ao abrir/atualizar a tela |
 | M5 | HU 03, 09 e 15 → **backlog futuro** | Prioridades B/C, dependem de serviço de e-mail (03) ou não fazem parte do fluxo essencial de compra |
@@ -46,7 +46,9 @@ da disciplina.
 
 ## 5. Ciclo de vida do pedido
 
-`AGUARDANDO_PAGAMENTO → PAGO → EM_PREPARO → PRONTO → SAIU_PARA_ENTREGA / RETIRADO → ENTREGUE`
+- **Delivery:** `AGUARDANDO_PAGAMENTO → PAGO → EM_PREPARO → PRONTO → SAIU_PARA_ENTREGA → ENTREGUE`
+- **Retirada:** `AGUARDANDO_PAGAMENTO → PAGO → EM_PREPARO → PRONTO → ENTREGUE` (o status `ENTREGUE` indica que o cliente retirou no balcão)
+
 Em qualquer etapa anterior a `EM_PREPARO`, o pedido pode ir para `CANCELADO`.
 
 ## 6. Regras de negócio consolidadas

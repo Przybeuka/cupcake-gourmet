@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fundo: #f4f7ef;        /* leite de pistache */
+  --color-superficie: #ffffff;
+  --color-tinta: #2e1a24;        /* chocolate com amora */
+  --color-suave: #6e5a63;
+  --color-linha: #e0e5d6;
+  --color-framboesa: #b8336a;
+  --color-framboesa-escura: #962553;
+  --color-framboesa-clara: #fbe7ef;
+  --color-pistache: #7fa36b;
+  --color-pistache-clara: #e6efdd;
+  --color-alerta: #a3471b;
+  --color-alerta-clara: #fdeee4;
+
+  --font-titulo: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-texto: "Figtree", system-ui, sans-serif;
+}
+
+html {
+  background: var(--color-fundo);
+  color: var(--color-tinta);
+  font-family: var(--font-texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-titulo);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-framboesa);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Borda de glacê: topo ondulado das imagens de produto */
+.glace {
+  -webkit-mask: radial-gradient(14px at 50% 14px, #000 99%, #0000 101%) 50% 0 / 26px 100% repeat-x,
+    linear-gradient(#000 0 0) 0 14px / 100% 100% no-repeat;
+  mask: radial-gradient(14px at 50% 14px, #000 99%, #0000 101%) 50% 0 / 26px 100% repeat-x,
+    linear-gradient(#000 0 0) 0 14px / 100% 100% no-repeat;
+}
+
+.sem-scrollbar::-webkit-scrollbar { display: none; }
+.sem-scrollbar { scrollbar-width: none; }
+
+@keyframes entrada-toast {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.toast-entrada { animation: entrada-toast 0.2s ease-out; }
+
+@keyframes pisca {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(184 51 106 / 0.5); }
+  50% { box-shadow: 0 0 0 6px rgb(184 51 106 / 0); }
+}
+.alerta-novo { animation: pisca 1.2s ease-in-out 5; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

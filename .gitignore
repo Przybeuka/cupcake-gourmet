@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+backend/instance/
+backend/uploads/
+.env
+
+# Node
+node_modules/
+frontend/dist/
+*.local
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Capturas do navegador de testes
+.playwright-mcp/
+*.tsbuildinfo
